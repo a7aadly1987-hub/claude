@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>صفحتي مع Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf7f2; --card:#ffffff; --text:#1f1d1a; --muted:#6b665e;
+    --accent:#c96442; --accent-soft:#f4e3da; --border:#e8e2d8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1a1816; --card:#24211e; --text:#f2eee8; --muted:#a59f95;
+      --accent:#e07a55; --accent-soft:#3a2a22; --border:#35312c;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Cairo',system-ui,sans-serif;line-height:1.8}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 16px}
+  header{text-align:center;margin-bottom:56px}
+  .avatar{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;color:var(--accent);
+    border:3px solid var(--accent);overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  h1{font-size:2.2rem;margin:0 0 6px;font-weight:800}
+  .role{color:var(--accent);font-weight:600;margin:0 0 16px}
+  .bio{color:var(--muted);max-width:620px;margin:0 auto 22px}
+  .links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .links a{text-decoration:none;color:var(--text);border:1px solid var(--border);background:var(--card);
+    padding:6px 16px;border-radius:999px;font-size:.95rem;transition:.2s}
+  .links a:hover{border-color:var(--accent);color:var(--accent)}
+  h2{font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:6px;height:26px;background:var(--accent);border-radius:3px}
+  .section-sub{color:var(--muted);margin:0 0 22px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .filters button{font-family:inherit;border:1px solid var(--border);background:var(--card);color:var(--text);
+    padding:4px 14px;border-radius:999px;cursor:pointer;font-size:.9rem}
+  .filters button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .grid{display:grid;gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+  .card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+  .card h3{margin:0;font-size:1.1rem}
+  .tag{font-size:.78rem;background:var(--accent-soft);color:var(--accent);padding:2px 10px;border-radius:999px;white-space:nowrap}
+  pre{margin:0;white-space:pre-wrap;word-wrap:break-word;background:var(--bg);border:1px solid var(--border);
+    border-radius:10px;padding:14px;font-family:inherit;font-size:.95rem;color:var(--text)}
+  .copy{margin-top:12px;font-family:inherit;border:none;background:var(--accent);color:#fff;
+    padding:6px 18px;border-radius:8px;cursor:pointer;font-size:.9rem}
+  .copy:hover{opacity:.9}
+  footer{text-align:center;color:var(--muted);font-size:.9rem;margin-top:64px;padding-top:24px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== التعريف: عدّل الاسم والوصف والروابط ===== -->
+  <header>
+    <div class="avatar">أ</div>
+    <!-- لو عايز صورتك: ارفع صورة باسم me.jpg وبدّل السطر اللي فوق بده:
+         <div class="avatar"><img src="me.jpg" alt="صورتي"></div> -->
+    <h1>اسمك هنا</h1>
+    <p class="role">مهتم بالذكاء الاصطناعي واستخدام Claude</p>
+    <p class="bio">
+      أهلاً! دي صفحتي اللي بجمع فيها أفضل البرومبتات اللي بستخدمها مع Claude في الشغل والتعلم والكتابة.
+      اكتب هنا نبذة قصيرة عنك: شغلك، اهتماماتك، وبتستخدم الذكاء الاصطناعي في إيه.
+    </p>
+    <div class="links">
+      <a href="https://github.com/a7aadly1987-hub" target="_blank">GitHub</a>
+      <a href="#" target="_blank">LinkedIn</a>
+      <a href="mailto:you@example.com">راسلني</a>
+    </div>
+  </header>
+
+  <!-- ===== البرومبتات ===== -->
+  <section>
+    <h2>البرومبتات بتاعتي</h2>
+    <p class="section-sub">انسخ أي برومبت واستخدمه مع Claude. بدّل اللي بين الأقواس [ ] بالتفاصيل بتاعتك.</p>
+
+    <div class="filters" id="filters">
+      <button class="active" data-f="all">الكل</button>
+      <button data-f="كتابة">كتابة</button>
+      <button data-f="تعلم">تعلم</button>
+      <button data-f="شغل">شغل</button>
+      <button data-f="برمجة">برمجة</button>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <div class="card" data-cat="كتابة">
+        <div class="card-head"><h3>تحسين أي نص</h3><span class="tag">كتابة</span></div>
+<pre>راجع النص ده وحسّنه من غير ما تغيّر المعنى:
+- صحّح الأخطاء الإملائية والنحوية
+- خلّي الجمل أوضح وأقصر
+- حافظ على أسلوبي ونبرتي
+
+وبعدين اكتبلي قائمة قصيرة بأهم التعديلات اللي عملتها.
+
+النص:
+[الصق النص هنا]</pre>
+        <button class="copy">نسخ</button>
+      </div>
+
+      <div class="card" data-cat="تعلم">
+        <div class="card-head"><h3>اشرحلي كأني مبتدئ</h3><span class="tag">تعلم</span></div>
+<pre>اشرحلي [الموضوع] كأني أول مرة أسمع عنه.
+ابدأ بتشبيه من الحياة اليومية، وبعدين الفكرة الأساسية في 3 نقاط،
+وبعدين مثال عملي.
+في الآخر اسألني سؤالين أتأكد بيهم إني فهمت.</pre>
+        <button class="copy">نسخ</button>
+      </div>
+
+      <div class="card" data-cat="شغل">
+        <div class="card-head"><h3>إيميل احترافي</h3><span class="tag">شغل</span></div>
+<pre>اكتبلي إيميل [بالعربي / بالإنجليزي] لـ [الشخص أو الجهة].
+الهدف: [اللي عايز أوصله].
+النبرة: [رسمية / ودودة / مختصرة].
+خلّيه قصير وواضح، وابدأه بعنوان مناسب للإيميل.</pre>
+        <button class="copy">نسخ</button>
+      </div>
+
+      <div class="card" data-cat="شغل">
+        <div class="card-head"><h3>خطة لأي مشروع</h3><span class="tag">شغل</span></div>
+<pre>عندي مشروع: [وصف المشروع].
+الوقت المتاح: [المدة]. الإمكانيات: [الميزانية / الفريق].
+
+قسّملي المشروع لمراحل، ولكل مرحلة:
+- المهام المطلوبة
+- الوقت المتوقع
+- أكبر خطر ممكن يقابلني وإزاي أتعامل معاه</pre>
+        <button class="copy">نسخ</button>
+      </div>
+
+      <div class="card" data-cat="برمجة">
+        <div class="card-head"><h3>مراجعة كود</h3><span class="tag">برمجة</span></div>
+<pre>راجع الكود ده كأنك مبرمج خبير:
+1. فيه أخطاء أو حالات ممكن تكسره؟
+2. فيه طريقة أبسط أو أسرع؟
+3. هل أسماء المتغيرات والتنظيم واضحين؟
+
+اديني الكود بعد التعديل مع شرح مختصر لكل تغيير.
+
+[الصق الكود هنا]</pre>
+        <button class="copy">نسخ</button>
+      </div>
+
+      <div class="card" data-cat="تعلم">
+        <div class="card-head"><h3>ملخص أي محتوى</h3><span class="tag">تعلم</span></div>
+<pre>لخّصلي المحتوى ده في:
+- جملة واحدة فيها الفكرة الرئيسية
+- 5 نقاط بأهم الأفكار
+- حاجة واحدة أقدر أطبقها النهارده
+
+[الصق المقال أو المحتوى هنا]</pre>
+        <button class="copy">نسخ</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    اتعملت بمساعدة Claude · <span id="year"></span>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // نسخ البرومبت
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.previousElementSibling.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'اتنسخ ✓';
+        setTimeout(() => btn.textContent = 'نسخ', 1500);
+      });
+    });
+  });
+
+  // الفلترة حسب التصنيف
+  document.querySelectorAll('#filters button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#filters button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      const f = b.dataset.f;
+      document.querySelectorAll('#grid .card').forEach(c => {
+        c.style.display = (f === 'all' || c.dataset.cat === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
